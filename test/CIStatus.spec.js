@@ -4,7 +4,7 @@ var CIStatus = require('../modules/CIStatus')
 
 describe('CIStatus', function () {
 
-  it('expectation', function () {
+  it('reports if passed', function () {
     var json = {
       payload: {
         status: 'success'
@@ -12,6 +12,16 @@ describe('CIStatus', function () {
     }
     var status = new CIStatus( json )
     expect( status.passed() ).to.be.ok
+  })
+
+  it('reports if failed', function () {
+    var json = {
+      payload: {
+        status: 'failure'
+      }
+    }
+    var status = new CIStatus( json )
+    expect( status.failed() ).to.be.ok
   })
 
 })
