@@ -20,8 +20,6 @@ function CIStatus(json){
     status = payload.status
   }
 
-
-
   function passed(){
     return /success/.test(status)
   }
