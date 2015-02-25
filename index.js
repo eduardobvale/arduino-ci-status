@@ -2,6 +2,8 @@ var five = require('johnny-five')
   , board = new five.Board()
 
 var net = require('net')
+var CiStatus = require('./modules/CiStatus')
+var currentCiStatus
 
 
 var leds = {
@@ -30,26 +32,14 @@ client.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST, function() {
   var data = binary.toString()
   console.log( '-- data', data )
   try{
-    jsonData = JSON.parse(data)
-  } catch(e){}
-
-  if( !jsonData ){
-    console.log( '-- failed to parse json', data )
+    currentCiStatus = CiStatus(JSON.parse(data))
+  } catch(e){
+    console.log( '-- failed to parse or invalid json', data )
     return
   }
-
-  turnOnOff(leds.green,false)
-  turnOnOff(leds.red,false)
-
-  if( jsonData.payload ){
-    if( /success/.test(jsonData.payload.status) ){
-      turnOnOff(leds.green,true)
-    }else{
-      turnOnOff(leds.red,true)
-    }
-  } else {
-    console.log( '-- json has no property payload' )
-  }
+  turnOnOff(leds.green, false)
+  turnOnOff(leds.red, false)
+  currentCiStatus.passed() ? turnOnOff(leds.green, true) : turnOnOff(leds.red, true)
 })
 
 

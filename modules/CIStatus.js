@@ -1,6 +1,6 @@
-module.exports = CIStatus
+module.exports = CiStatus
 
-function CIStatus(json){
+function CiStatus(json){
   var _json = json
     , payload
     , status
@@ -15,7 +15,7 @@ function CIStatus(json){
 
   function constructor(json){
     if( !json || !json.payload )
-      throw new Error('invalid json: ' + json)
+      throw new Error('CiStatus -- invalid json: ' + json)
     payload = json.payload
     status = payload.status
   }
