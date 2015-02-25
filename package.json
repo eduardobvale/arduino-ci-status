@@ -1,13 +1,18 @@
 {
   "name": "ci-status",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "ci-status =========",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha test/**",
+    "test-watch": "./node_modules/mocha/bin/mocha test/** --watch --growl"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^2.0.0",
+    "mocha": "^2.1.0",
+    "node-simple-router": "^0.9.4-2"
+  },
   "dependencies": {
     "johnny-five": "^0.8.44"
   }
