@@ -2,8 +2,9 @@ var five = require('johnny-five')
   , board = new five.Board()
 
 var net = require('net')
+var socket = new net.Socket()
 var CiStatus = require('./modules/CiStatus')
-var currentCiStatus
+var ciStatus
 
 
 var leds = {
@@ -15,8 +16,7 @@ var leds = {
 var WEBHOOK_PUBLISHER_HOST = process.env.WEBHOOK_PUBLISHER_HOST || '146.185.167.197'
 var WEBHOOK_PUBLISHER_TCP_PORT = process.env.WEBHOOK_PUBLISHER_TCP_PORT || 3001
 
-var client = new net.Socket()
-client.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST, function() {
+socket.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST, function() {
   console.log('-- connected to server!')
 })
 .on('close', function(hadError) {
@@ -32,14 +32,14 @@ client.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST, function() {
   var data = binary.toString()
   console.log( '-- data', data )
   try{
-    currentCiStatus = CiStatus(JSON.parse(data))
+    ciStatus = new CiStatus(JSON.parse(data))
   } catch(e){
     console.log( '-- failed to parse or invalid json', data )
     return
   }
   turnOnOff(leds.green, false)
   turnOnOff(leds.red, false)
-  currentCiStatus.passed() ? turnOnOff(leds.green, true) : turnOnOff(leds.red, true)
+  ciStatus.passed() ? turnOnOff(leds.green, true) : turnOnOff(leds.red, true)
 })
 
 
