@@ -4,12 +4,16 @@ var CiStatus = require('../modules/CiStatus')
 
 describe('CiStatus', function () {
 
+  it('fails miserably', function () {
+    expect( false ).to.be.ok
+  })
+
   it('raises and error if the JSON is invalid', function () {
     var json = {}
     expect(function(){
       new CiStatus( json )
-    }).to.throw();
-  });
+    }).to.throw()
+  })
 
   it('reports if passed', function () {
     var json = {
