@@ -1,0 +1,11 @@
+dependencies:
+  override:
+    - npm install
+
+test:
+  override:
+    - npm test
+
+notify:
+  webhooks:
+    - url: http://146.185.167.197:3000/hook
