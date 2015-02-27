@@ -1,6 +1,6 @@
-module.exports = CiStatus
+module.exports = ContinuousIntegrationStatus
 
-function CiStatus(json){
+function ContinuousIntegrationStatus(json){
   var _json = json
     , payload
     , status
@@ -15,7 +15,7 @@ function CiStatus(json){
 
   function constructor(json){
     if( !json || !json.payload )
-      throw new Error('CiStatus -- invalid json: ' + json)
+      throw new Error('ContinuousIntegrationStatus -- invalid json: ' + json)
     payload = json.payload
     status = payload.status
   }
