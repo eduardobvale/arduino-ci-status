@@ -1,6 +1,8 @@
 ci-status
 =========
 
+[![Circle CI](https://circleci.com/gh/christian-fei/ci-status.svg?style=svg)](https://circleci.com/gh/christian-fei/ci-status)
+
 
 # Setup
 
