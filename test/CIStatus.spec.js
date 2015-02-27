@@ -1,8 +1,8 @@
 var expect = require('chai').expect
 
-var CiStatus = require('../modules/CiStatus')
+var CIStatus = require('../modules/CIStatus')
 
-describe('CiStatus', function () {
+describe('CIStatus', function () {
 
   it('fails miserably', function () {
     expect( false ).to.be.ok
@@ -11,7 +11,7 @@ describe('CiStatus', function () {
   it('raises and error if the JSON is invalid', function () {
     var json = {}
     expect(function(){
-      new CiStatus( json )
+      new CIStatus( json )
     }).to.throw()
   })
 
@@ -21,7 +21,7 @@ describe('CiStatus', function () {
         status: 'success'
       }
     }
-    var status = new CiStatus( json )
+    var status = new CIStatus( json )
     expect( status.passed() ).to.be.ok
   })
 
@@ -31,7 +31,7 @@ describe('CiStatus', function () {
         status: 'failure'
       }
     }
-    var status = new CiStatus( json )
+    var status = new CIStatus( json )
     expect( status.failed() ).to.be.ok
   })
 

@@ -3,7 +3,7 @@ var five = require('johnny-five')
 
 var net = require('net')
 var socket = new net.Socket()
-var CiStatus = require('./modules/CiStatus')
+var CIStatus = require('./modules/CIStatus')
 var ciStatus
 
 
@@ -32,7 +32,7 @@ socket.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST, function() {
   var data = binary.toString()
   console.log( '-- data', data )
   try{
-    ciStatus = new CiStatus(JSON.parse(data))
+    ciStatus = new CIStatus(JSON.parse(data))
   } catch(e){
     console.log( '-- failed to parse or invalid json', data )
     return
