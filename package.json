@@ -1,8 +1,8 @@
 {
-  "name": "ci-status",
+  "name": "arduino-ci-status",
   "version": "0.0.0",
-  "description": "ci-status =========",
-  "repository": "https://github.com/christian-fei/ci-status.git",
+  "description": "arduino-ci-status =========",
+  "repository": "https://github.com/christian-fei/arduino-ci-status.git",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test/**",

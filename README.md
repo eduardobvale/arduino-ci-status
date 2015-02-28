@@ -1,7 +1,7 @@
-ci-status
+arduino-ci-status
 =========
 
-[![Circle CI](https://circleci.com/gh/christian-fei/ci-status.svg?style=svg)](https://circleci.com/gh/christian-fei/ci-status)
+[![Circle CI](https://circleci.com/gh/christian-fei/arduino-ci-status.svg?style=svg)](https://circleci.com/gh/christian-fei/arduino-ci-status)
 
 
 # Setup
