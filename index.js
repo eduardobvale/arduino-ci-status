@@ -1,54 +1,43 @@
-var five = require('johnny-five')
-  , board = new five.Board()
-
-var net = require('net')
-var socket = new net.Socket()
-var CIStatus = require('./modules/CIStatus')
-var ciStatus
-
-
-var leds = {
-  green: null,
-  red:   null,
-}
-
+var j5 = require('johnny-five')
+  , board = new j5.Board()
 
 var WEBHOOK_PUBLISHER_HOST = process.env.WEBHOOK_PUBLISHER_HOST || '146.185.167.197'
 var WEBHOOK_PUBLISHER_TCP_PORT = process.env.WEBHOOK_PUBLISHER_TCP_PORT || 3001
 
-socket.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST, function() {
-  console.log('-- connected to server!')
-})
-.on('close', function(hadError) {
-  if (hadError)
-    console.log( '-- connection closed with error' )
-  else
-    console.log( '-- connection closed' )
-})
-.on('error', function(error) {
-  console.log( '-- error', error )
-})
-.on('data', function(binary) {
-  var data = binary.toString()
-  console.log( '-- data', data )
-  try{
-    ciStatus = new CIStatus(JSON.parse(data))
-  } catch(e){
-    console.log( '-- failed to parse or invalid json', data )
-    return
-  }
-  turnOnOff(leds.green, false)
-  turnOnOff(leds.red, false)
-  ciStatus.passed() ? turnOnOff(leds.green, true) : turnOnOff(leds.red, true)
-})
+var CIStatus = require('./modules/CIStatus')
+var leds = { green: null, red:   null }
 
+var net = require('net')
+var JSONSocket = require('json-socket')
+var socket = new JSONSocket(new net.Socket())
+socket.connect(WEBHOOK_PUBLISHER_TCP_PORT, WEBHOOK_PUBLISHER_HOST)
+
+socket.on('connect', function(){
+  console.log( '-- connected to server' )
+  socket.on('close', function(hadError) {
+    if (hadError) console.log( '-- connection closed with error' )
+    else console.log( '-- connection closed' )
+  })
+  socket.on('error', function(error) { console.log( '-- error', error ) })
+  socket.on('message', function(data) {
+    var ciStatus
+    try{
+      ciStatus = new CIStatus(data)
+    } catch(e){
+      console.log( '-- failed to parse or invalid json', data )
+      return
+    }
+    turnOnOff(leds.green, false)
+    turnOnOff(leds.red, false)
+    ciStatus.passed() ? turnOnOff(leds.green, true) : turnOnOff(leds.red, true)
+  })
+})
 
 board.on('ready', function() {
-  leds.green = new five.Led(3)
-  leds.red = new five.Led(6)
+  console.log( '-- board ready' )
+  leds.green = new j5.Led(6)
+  leds.red = new j5.Led(3)
 })
-
-
 
 function turnOnOff(led,turnOn){
   if( led ){

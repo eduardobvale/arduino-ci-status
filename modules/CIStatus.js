@@ -14,8 +14,11 @@ function CIStatus(json){
 
 
   function constructor(json){
-    if( !json || !json.payload )
+    console.log( '-- CIStatus', json )
+    if( !json || !json.payload ){
+      console.log( 'ooops', !json, !json.payload )
       throw new Error('CIStatus -- invalid json: ' + json)
+    }
     payload = json.payload
     status = payload.status
   }
