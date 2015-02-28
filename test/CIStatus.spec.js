@@ -4,10 +4,6 @@ var CIStatus = require('../modules/CIStatus')
 
 describe('CIStatus', function () {
 
-  it('fails miserably', function () {
-    expect( false ).to.be.ok
-  })
-
   it('raises and error if the JSON is invalid', function () {
     var json = {}
     expect(function(){
